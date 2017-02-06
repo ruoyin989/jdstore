@@ -1,5 +1,6 @@
 class Admin::ProductsController < ApplicationController
   before_action :authenticate_user!, only: [:new,:edit,:create,:update,:destroy]
+  before_action :require_is_admin
 
   def index
       @products =Product.all.order("created_at DESC")
@@ -40,10 +41,21 @@ class Admin::ProductsController < ApplicationController
         redirect_to admin_products_path
       end
 
+      def publish
+        @product =Product.find(params[:id])
+        @product.publish!
+        redirect_to :back
+      end
+
+      def hide
+        @product =Product.find(params[:id])
+        @product.hide!
+        redirect_to :back
+      end
 
     private
       def product_params
-        params.require(:job).permit(:title, :description, :quantity, :price)
+        params.require(:job).permit(:title, :description, :quantity, :price, :is_hidden)
       end
 
 
