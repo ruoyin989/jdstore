@@ -1,7 +1,7 @@
 class Admin::ProductsController < ApplicationController
   before_action :authenticate_user!, only: [:new,:edit,:create,:update,:destroy]
   before_action :require_is_admin
-
+  layout "admin"
   def index
       @products =Product.all.order("created_at DESC")
     end
@@ -55,7 +55,7 @@ class Admin::ProductsController < ApplicationController
 
     private
       def product_params
-        params.require(:job).permit(:title, :description, :quantity, :price, :is_hidden)
+        params.require(:product).permit(:title, :description, :quantity, :price, :image, :is_hidden)
       end
 
 

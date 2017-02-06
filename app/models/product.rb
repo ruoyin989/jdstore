@@ -10,4 +10,5 @@ class Product < ApplicationRecord
     self.save
   end
 
+  mount_uploader :image, ImageUploader
 end
